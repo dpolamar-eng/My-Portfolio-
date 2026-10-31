@@ -1,8 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f6f3fb;
+  --foreground: #1c1435;
+  --card-bg: #ffffff;
+  --card-border: rgba(124, 58, 237, 0.12);
+  --primary-accent: #7c3aed;
+  --primary-glow: rgba(124, 58, 237, 0.18);
+  --secondary-accent: #6366f1;
 }
 
 @theme inline {
@@ -12,15 +17,178 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+  selection-background-color: #ddd6fe;
+  selection-color: #1c1435;
+}
+
+/* Subtle lavender data-grid background texture */
+.data-grid-pattern {
+  background-image:
+    linear-gradient(to right, rgba(124, 58, 237, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(124, 58, 237, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Accessible focus visible outlines */
+*:focus-visible {
+  outline: 2px solid #7c3aed;
+  outline-offset: 3px;
+}
+
+/* Hide all scrollbars while preserving full smooth scrollability */
+*::-webkit-scrollbar,
+::-webkit-scrollbar {
+  display: none !important;
+  width: 0px !important;
+  height: 0px !important;
+  background: transparent !important;
+}
+
+* {
+  scrollbar-width: none !important;
+  /* Firefox */
+  -ms-overflow-style: none !important;
+  /* IE and Edge */
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
+}
+
+/* 3D Flip Card Utilities */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.transform-style-3d {
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
+}
+
+@keyframes modalFlipIn {
+  from {
+    opacity: 0;
+    transform: rotateX(-14deg) translateY(-20px) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: rotateX(0deg) translateY(0) scale(1);
+  }
+}
+
+/* Silky-smooth 3D Unfolding and Closing Keyframes */
+@keyframes smoothFlipIn {
+  0% {
+    opacity: 0;
+    transform: perspective(1200px) rotateX(16deg) translateY(28px) scale(0.95);
+    filter: blur(4px);
+  }
+  60% {
+    filter: blur(0px);
+  }
+  100% {
+    opacity: 1;
+    transform: perspective(1200px) rotateX(0deg) translateY(0) scale(1);
+    filter: blur(0px);
+  }
+}
+
+@keyframes smoothFlipOut {
+  0% {
+    opacity: 1;
+    transform: perspective(1200px) rotateX(0deg) translateY(0) scale(1);
+    filter: blur(0px);
+  }
+  100% {
+    opacity: 0;
+    transform: perspective(1200px) rotateX(-12deg) translateY(-18px) scale(0.97);
+    filter: blur(3px);
+  }
+}
+
+@keyframes backdropFadeIn {
+  from {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+  }
+  to {
+    opacity: 1;
+    backdrop-filter: blur(12px);
+  }
+}
+
+@keyframes backdropFadeOut {
+  from {
+    opacity: 1;
+    backdrop-filter: blur(12px);
+  }
+  to {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+  }
+}
+
+/* Interactive Folder Deck Keyframes */
+@keyframes cardPullUp {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  60% {
+    transform: translateY(-75px) scale(1.02);
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(-110px) scale(0.98);
+    opacity: 0;
+  }
+}
+
+@keyframes fullCardReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(28px) scale(0.97);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes folderReturn {
+  0% {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
